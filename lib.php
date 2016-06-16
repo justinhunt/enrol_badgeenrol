@@ -25,6 +25,8 @@
 
 require_once("$CFG->libdir/formslib.php");
 
+define('ENROL_BADGEENROL_PROFILEFIELDNAME', 'customtext2');
+
 class enrol_badgeenrol_plugin extends enrol_plugin {
 
     /**
@@ -144,7 +146,15 @@ class enrol_badgeenrol_plugin extends enrol_plugin {
             return $OUTPUT->box(get_string('nobadgesconfigured', 'enrol_badgeenrol'), 'generalbox');
         }
 
+    	//first check if they have access via userprofile field: Justin
+    	$access = $this->check_profile_field($instance);
+		if(!$access){
+				$out = $OUTPUT->box(get_string('notinuserprofile', 'enrol_badgeenrol'), 'generalbox');
+				return $out;
+		}
+    
         $access = $this->check_required_badges($USER->id, $configbadges);
+    
 
         if ($access) {
             $form = new enrol_badgeenrol_form(null, $instance);
@@ -181,6 +191,30 @@ class enrol_badgeenrol_plugin extends enrol_plugin {
         }
 
         return $out;
+    }
+    
+    //This function checks the specified profile field for a
+    //a | separated list of course short names. If the current course shortname
+    //is in the list then the user can enrol(once they have all the badges..)
+     public function check_profile_field($instance) {
+        global $DB, $CFG, $USER;
+        $access = false;
+ 
+        $profilefield = $instance->{ENROL_BADGEENROL_PROFILEFIELDNAME};
+        $course = get_course($instance->courseid);
+		
+		require_once("$CFG->dirroot/user/profile/lib.php");
+		$profileprops = get_object_vars(profile_user_record($USER->id));
+
+		if($profileprops && array_key_exists($profilefield,$profileprops)){
+			$kisokamoku=$profileprops[$profilefield];
+			$courses = explode('|',$kisokamoku);
+			if(in_array($course->shortname,$courses)){
+				$access=true;
+			}
+		}
+
+        return $access;
     }
 
     public function check_required_badges($userid, $badges) {

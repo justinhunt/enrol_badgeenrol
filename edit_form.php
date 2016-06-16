@@ -41,6 +41,10 @@ class enrol_badgeenrol_edit_form extends moodleform {
 
         $mform->addElement('text', 'name', get_string('custominstancename', 'enrol'));
         $mform->setType('name', PARAM_TEXT);
+        
+        $mform->addElement('text', ENROL_BADGEENROL_PROFILEFIELDNAME, get_string('profilefieldname', 'enrol_badgeenrol'));
+        $mform->setType(ENROL_BADGEENROL_PROFILEFIELDNAME, PARAM_TEXT);
+        $mform->setDefault(ENROL_BADGEENROL_PROFILEFIELDNAME, 'kisokamoku');
 
         if ($badges = $DB->get_records('badge', array('type' => 1))) {
             $badgeslist = array();

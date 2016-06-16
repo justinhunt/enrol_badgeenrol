@@ -71,6 +71,7 @@ if ($mform->is_cancelled()) {
         $instance->name = $data->name;
         $instance->courseid = $data->courseid;
         $instance->roleid = $data->roleid;
+        $instance->{ENROL_BADGEENROL_PROFILEFIELDNAME} = $data->{ENROL_BADGEENROL_PROFILEFIELDNAME};
         if (!empty($data->badges)) {
             $instance->customtext1 = implode('#', $data->badges);
         } else {
