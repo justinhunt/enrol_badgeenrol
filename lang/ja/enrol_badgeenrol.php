@@ -29,7 +29,8 @@ $string['nobadgesfound'] = 'No available site badges found.';
 $string['nobadgesconfigured'] = 'No required site badges for badge enrolment configured. Please contact a course administrator.';
 $string['role'] = 'Default assigned role';
 $string['enrolinfo'] = '発展科目に入るには、基礎科目を完了してください。 ';
-$string['accessgranted'] = '基礎科目が完了しました。';
+$string['accessgranted'] = 'おめでとうございます！基礎科目が完了しました。
+下の「登録」ボタンを押して、このコースに進んでください。';
 $string['enrolme'] = '登録';
 $string['profilefieldname'] = 'Profile Field Name';
 $string['notinuserprofile'] = 'このコースに登録する権限はありません。';
